@@ -3,7 +3,7 @@ import Userpage from './Userpage';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App w-screen h-screen">
       <Userpage />
     </div>
   );
