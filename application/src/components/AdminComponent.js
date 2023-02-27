@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import Table from "@mui/material/Table";
@@ -13,6 +13,7 @@ import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import axios from "axios";
 
 const sentMessages = [
   {
@@ -106,10 +107,10 @@ function Row(props) {
           />
         </TableCell>
         <TableCell component="th" scope="row">
-          {data.fromEmail}
+          {data.email}
         </TableCell>
-        <TableCell align="left">{data.customerId}</TableCell>
-        <TableCell align="left">{data.id}</TableCell>
+        <TableCell align="left">{data.customerID}</TableCell>
+        {/* <TableCell align="left">{data.id}</TableCell> */}
         <TableCell align="left">{data.date}</TableCell>
         <TableCell>
           <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
@@ -148,12 +149,27 @@ function Row(props) {
 
 function AdminComponent() {
   const [selected, setSelected] = useState(new Set());
+  const [messages, setMessages] = useState([]);
 
   const handleCheck = (isChecked, index) => {
     isChecked
       ? setSelected(new Set([...selected, index]))
       : setSelected(new Set([...selected].filter((i) => i !== index)));
   };
+
+  useEffect(() => {
+    const getMessages = async () => {
+      await axios
+        .get(process.env.REACT_APP_GET_MESSAGES, {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+        })
+        .then((result) => setMessages(result.data))
+        .catch((error) => console.log(error));
+    };
+
+    getMessages();
+  }, []);
 
   return (
     <div
@@ -191,13 +207,13 @@ function AdminComponent() {
                 </TableCell>
                 <TableCell>Customer Email</TableCell>
                 <TableCell align="left">Customer ID</TableCell>
-                <TableCell align="left">Transaction ID</TableCell>
+                {/* <TableCell align="left">Transaction ID</TableCell> */}
                 <TableCell align="left">Date</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>
-              {sentMessages.map((message, index) => {
+              {messages.map((message, index) => {
                 return (
                   <Row
                     key={message.id}

@@ -16,9 +16,8 @@ const Userpage = () => {
       message: message,
     };
 
-    console.log("HERE");
     await axios
-      .post("https://4v2y9f8je9.execute-api.us-east-1.amazonaws.com/messageBox", object, {
+      .post(process.env.REACT_APP_MESSAGE_SUBMIT_URL, object, {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*",
       })
