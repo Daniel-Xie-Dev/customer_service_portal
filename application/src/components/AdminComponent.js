@@ -15,79 +15,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import axios from "axios";
 
-const sentMessages = [
-  {
-    id: 0,
-    fromEmail: "testemail0@email.com",
-    message: "The color is wrong",
-    customerId: "1234",
-    date: "2023-01-22",
-  },
-  {
-    id: 1,
-    fromEmail: "testemail1@email.com",
-    message: "The color is wrong",
-    customerId: "5678",
-    date: "2022-12-31",
-  },
-  {
-    id: 2,
-    fromEmail: "testemail2@email.com",
-    message: "The color is wrong",
-    customerId: "9012",
-    date: "2023-01-03",
-  },
-  {
-    id: 3,
-    fromEmail: "testemail3@email.com",
-    message: "The color is wrong",
-    customerId: "3456",
-    date: "2022-12-29",
-  },
-  {
-    id: 4,
-    fromEmail: "testemail4@email.com",
-    message: "The color is wrong",
-    customerId: "7890",
-    date: "2023-01-15",
-  },
-  {
-    id: 5,
-    fromEmail: "testemail5@email.com",
-    message: "The color is wrong",
-    customerId: "2345",
-    date: "2023-01-28",
-  },
-  {
-    id: 6,
-    fromEmail: "testemail6@email.com",
-    message: "The color is wrong",
-    customerId: "6789",
-    date: "2023-01-10",
-  },
-  {
-    id: 7,
-    fromEmail: "testemail7@email.com",
-    message: "The color is wrong",
-    customerId: "0123",
-    date: "2022-12-25",
-  },
-  {
-    id: 8,
-    fromEmail: "testemail8@email.com",
-    message: "The color is wrong",
-    customerId: "4567",
-    date: "2023-01-18",
-  },
-  {
-    id: 9,
-    fromEmail: "testemail9@email.com",
-    message: "The color is wrong",
-    customerId: "8901",
-    date: "2023-01-07",
-  },
-];
-
 function Row(props) {
   const { data, isSelected, index, handleCheck } = props;
   const [open, setOpen] = useState(false);
@@ -189,12 +116,12 @@ function AdminComponent() {
               <TableRow>
                 <TableCell>
                   <Checkbox
-                    indeterminate={selected.size !== 0 && selected.size !== sentMessages.length}
+                    indeterminate={selected.size !== 0 && selected.size !== messages.length}
                     onChange={(event) => {
                       if (event.target.checked) {
                         setSelected(
                           new Set(
-                            sentMessages.map((_, index) => {
+                            messages.map((_, index) => {
                               return index;
                             })
                           )
