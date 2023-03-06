@@ -1,8 +1,7 @@
 
 application/.env
 application/node_modules/
-@ -0,0 +1,21 @@
-#amplify-do-not-edit-begin
+ #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/logs
@@ -23,3 +22,4 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+.vscode
