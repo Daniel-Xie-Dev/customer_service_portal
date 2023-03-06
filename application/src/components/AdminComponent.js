@@ -87,10 +87,7 @@ function AdminComponent() {
   useEffect(() => {
     const getMessages = async () => {
       await axios
-        .get(process.env.REACT_APP_GET_MESSAGES, {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-        })
+        .get(process.env.REACT_APP_GET_MESSAGES)
         .then((result) => setMessages(result.data))
         .catch((error) => console.log(error));
     };
