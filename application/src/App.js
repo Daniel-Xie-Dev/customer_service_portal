@@ -29,7 +29,8 @@ function App({ signOut, user }) {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={userData?.isAdmin ? <AdminComponent /> : <Userpage />} />
+          <Route path="/" element={<Userpage />} />
+          <Route path="/admin" element={<AdminComponent />} />
         </Routes>
         <button onClick={signOut}>Sign out</button>
       </BrowserRouter>

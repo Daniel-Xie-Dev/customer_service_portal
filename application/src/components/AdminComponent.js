@@ -15,6 +15,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import axios from "axios";
 
+const URL = process.env.REACT_APP_WEBSOCKET_URL;
+console.log(URL);
+
 function Row(props) {
   const { data, isSelected, index, handleCheck } = props;
   const [open, setOpen] = useState(false);
@@ -90,6 +93,10 @@ function AdminComponent() {
         .get(process.env.REACT_APP_GET_MESSAGES)
         .then((result) => setMessages(result.data))
         .catch((error) => console.log(error));
+
+      // const response = await fetch(process.env.REACT_APP_GET_MESSAGES);
+
+      // const data = await response.json();
     };
 
     getMessages();
