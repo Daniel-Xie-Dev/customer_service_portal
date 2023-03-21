@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-const Userpage = () => {
+const Userpage = (props) => {
+  const { userData } = { ...props };
+
   const [recipientEmail, setRecipientEmail] = useState("");
   const [message, setMessage] = useState("");
 
@@ -10,8 +12,7 @@ const Userpage = () => {
     event.preventDefault();
     const object = {
       id: uuidv4(),
-      email: "dummyEmail@email.com",
-      customerID: 0,
+      email: userData.email,
       date: new Date().toLocaleDateString(),
       message: message,
     };
@@ -75,8 +76,6 @@ const Userpage = () => {
             </svg>
             <span class="sr-only">Send message</span>
           </button>
-
-    
         </div>
       </form>
     </div>

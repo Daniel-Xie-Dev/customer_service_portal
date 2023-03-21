@@ -8,6 +8,7 @@ import AdminComponent from "./components/AdminComponent";
 import Userpage from "./Userpage";
 
 import { withAuthenticator } from "@aws-amplify/ui-react";
+import { Button } from "@mui/material";
 
 function App({ signOut, user }) {
   // console.log(user);
@@ -29,11 +30,13 @@ function App({ signOut, user }) {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Userpage />} />
+          <Route path="/" element={<Userpage userData={userData} />} />
           <Route path="/admin" element={<AdminComponent />} />
         </Routes>
-        <button onClick={signOut}>Sign out</button>
       </BrowserRouter>
+      <button className="signout_button" onClick={signOut}>
+        Sign out
+      </button>
     </div>
   );
 }

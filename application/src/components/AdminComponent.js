@@ -14,9 +14,9 @@ import Checkbox from "@mui/material/Checkbox";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import axios from "axios";
+import { Button, MenuItem, TextField } from "@mui/material";
 
 const URL = process.env.REACT_APP_WEBSOCKET_URL;
-console.log(URL);
 
 function Row(props) {
   const { data, isSelected, index, handleCheck } = props;
@@ -39,7 +39,7 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {data.email}
         </TableCell>
-        <TableCell align="left">{data.customerID}</TableCell>
+        <TableCell align="left">{data.id}</TableCell>
         {/* <TableCell align="left">{data.id}</TableCell> */}
         <TableCell align="left">{data.date}</TableCell>
         <TableCell>
@@ -80,6 +80,7 @@ function Row(props) {
 function AdminComponent() {
   const [selected, setSelected] = useState(new Set());
   const [messages, setMessages] = useState([]);
+  const [page, setPage] = useState(1);
 
   const handleCheck = (isChecked, index) => {
     isChecked
@@ -91,7 +92,16 @@ function AdminComponent() {
     const getMessages = async () => {
       await axios
         .get(process.env.REACT_APP_GET_MESSAGES)
-        .then((result) => setMessages(result.data))
+        .then((result) => {
+          console.log(result.data);
+          setMessages(
+            result.data.sort((a, b) => {
+              const A = new Date(a.date);
+              const B = new Date(b.date);
+              return B - A;
+            })
+          );
+        })
         .catch((error) => console.log(error));
 
       // const response = await fetch(process.env.REACT_APP_GET_MESSAGES);
@@ -107,7 +117,7 @@ function AdminComponent() {
       className="AdminComponent"
       style={{
         width: "100%",
-        height: "100vh",
+        height: "100%",
         display: "flex",
         justifyContent: "center",
         // alignItems: "center",
@@ -137,23 +147,43 @@ function AdminComponent() {
                   />
                 </TableCell>
                 <TableCell>Customer Email</TableCell>
-                <TableCell align="left">Customer ID</TableCell>
+                <TableCell align="left">Message ID</TableCell>
                 {/* <TableCell align="left">Transaction ID</TableCell> */}
                 <TableCell align="left">Date</TableCell>
-                <TableCell />
+
+                <TableCell align="left">
+                  <TextField
+                    // id="filled-basic"
+                    label={`${page}`}
+                    select
+                    noValidate
+                    defaultValue={"1"}
+                  >
+                    {messages.map((items, index) => {
+                      if (index % 5 === 0) {
+                        const pageNumber = Math.floor(index / 5) + 1;
+                        return (
+                          <MenuItem onClick={() => setPage(pageNumber)}>{`${pageNumber}`}</MenuItem>
+                        );
+                      }
+                    })}
+                  </TextField>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {messages.map((message, index) => {
-                return (
-                  <Row
-                    key={message.id}
-                    data={message}
-                    index={index}
-                    isSelected={selected.has(index)}
-                    handleCheck={handleCheck}
-                  ></Row>
-                );
+                if (index >= (page - 1) * 5 && index < (page - 1) * 5 + 5) {
+                  return (
+                    <Row
+                      key={message.id}
+                      data={message}
+                      index={index}
+                      isSelected={selected.has(index)}
+                      handleCheck={handleCheck}
+                    ></Row>
+                  );
+                }
               })}
             </TableBody>
           </Table>
